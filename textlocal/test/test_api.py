@@ -1,19 +1,20 @@
+import os
 import unittest
 
 from textlocal import Textlocal
 
 
+API_KEY = os.environ['API_KEY']
+
 class TextlocalTest(unittest.TestCase):
 
     def setUp(self):
-        self.textlocal = Textlocal(api_key='vpvejpIVqYc'
-                                   '-EJuZMiGpno9Mnz9qDhMT05qF8ol7pu')
+        self.textlocal = Textlocal(api_key=API_KEY)
 
     def test_init_api_key(self):
         with self.assertRaises(Exception):
             textlocal = Textlocal()
-        textlocal = Textlocal(
-            api_key='vpvejpIVqYc-EJuZMiGpno9Mnz9qDhMT05qF8ol7pu')
+        textlocal = Textlocal(api_key=API_KEY)
         self.assertEqual(type(textlocal), Textlocal)
 
     def test_init_password_username(self):
@@ -25,7 +26,6 @@ class TextlocalTest(unittest.TestCase):
         self.assertEqual(type(textlocal), Textlocal)
 
     def test_get_credentials_returns_dict(self):
-        API_KEY = 'api_key'
         USERNAME = 'username'
         PASSWORD = 'password'
         textlocal = Textlocal(api_key=API_KEY)
@@ -36,7 +36,6 @@ class TextlocalTest(unittest.TestCase):
         self.assertIsInstance(credentials, dict)
 
     def test_get_credentials_returns_credentials(self):
-        API_KEY = 'api_key'
         USERNAME = 'username'
         PASSWORD = 'password'
         textlocal = Textlocal(api_key=API_KEY)
@@ -53,7 +52,6 @@ class TextlocalTest(unittest.TestCase):
         self.assertEqual(credentials['apiKey'], API_KEY)
 
     def test_get_credentials_prefers_api_key(self):
-        API_KEY = 'api_key'
         USERNAME = 'username'
         PASSWORD = 'password'
         textlocal = Textlocal(api_key=API_KEY,
