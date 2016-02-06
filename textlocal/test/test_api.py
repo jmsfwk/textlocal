@@ -61,7 +61,10 @@ class TextlocalTest(unittest.TestCase):
         self.assertEqual(len(credentials), 1)
 
     def test_call(self):
-        pass
+        response = self.textlocal._call('get', '')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(len(response), 2)
+        self.assertEqual(response['status'], 'failure')
 
     def test_get_balance_returns_tuple(self):
         balance = self.textlocal.get_balance()

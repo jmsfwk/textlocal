@@ -5,12 +5,14 @@ import requests
 
 import json
 
+
 class Textlocal(object):
     DOMAIN = 'https://api.txtlocal.com'
 
     def __init__(self, api_key=None, username=None, password=None):
         if api_key == username == password == None:
-            raise Exception("Either api_key or username and password must be used.")
+            raise Exception(
+                "Either api_key or username and password must be used.")
         elif (username is None and password is not None) or (password is None and username is not None):
             raise Exception("If using username and password both must be set.")
         self.api_key = api_key
@@ -24,21 +26,26 @@ class Textlocal(object):
         Returns as two-tuple in the form `(sms, mms)`.
         """
         PATHNAME = 'balance'
-        response = self._call(PATHNAME)
+        response = self._get(PATHNAME)
         balance = response.get('balance')
         return balance['sms'], balance['mms']
 
-    def _call(self, pathname, data=None):
+    def _get(self, pathname, data=None):
+        return self._call('get', pathname, data)
+
+    def _post(self, pathname, data=None):
+        pass
+
+    def _call(self, method, pathname, data=None):
         """
-        Makes a request to the textlocal api. Returns a JSON string.
+        Makes a request to the textlocal api. Returns a JSON dictionary.
         """
         url = urllib.parse.urljoin(self.DOMAIN, pathname)
-        if data:
-            data.update(self._get_credentials())
-        else:
-            data = self._get_credentials()
+        if not data:
+            data = dict()
+        data.update(self._get_credentials())
         data['test'] = 'true'
-        r = requests.post(url, data)
+        r = getattr(requests, method)(url, data)
         return r.json()
 
     def _get_credentials(self):
