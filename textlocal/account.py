@@ -1,8 +1,3 @@
-class Account(object):
-
-    def get_balance(self):
-        pass
-
 class Template(object):
     def __init__(self, title, body):
         self.title = title
