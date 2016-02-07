@@ -3,8 +3,6 @@ import urllib.parse
 
 import requests
 
-import json
-
 
 class Textlocal(object):
     DOMAIN = 'https://api.txtlocal.com'
@@ -30,11 +28,27 @@ class Textlocal(object):
         balance = response.get('balance')
         return balance['sms'], balance['mms']
 
+    def get_templates(self):
+        """
+        Fetches all of the templates stored on Textlocal
+        """
+        PATHNAME = 'get_templates'
+        response = self._get(PATHNAME)
+        return response.get('templates')
+
+    def check_keyword(self, keyword):
+        """
+        Fetches all of the templates stored on Textlocal
+        """
+        PATHNAME = 'check_keyword'
+        response = self._get(PATHNAME, {'keyword' : str(keyword)})
+        return response.get('templates')
+
     def _get(self, pathname, data=None):
         return self._call('get', pathname, data)
 
     def _post(self, pathname, data=None):
-        pass
+        return self._call('post', pathname, data)
 
     def _call(self, method, pathname, data=None):
         """
@@ -55,6 +69,6 @@ class Textlocal(object):
         Prefers an api key over username/password.
         """
         if self.api_key:
-            return {'apiKey' : self.api_key}
+            return {'apiKey': self.api_key}
         else:
-            return {'username': self.username, 'hash' : self.password}
+            return {'username': self.username, 'hash': self.password}

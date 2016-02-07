@@ -6,6 +6,7 @@ from textlocal import Textlocal
 
 API_KEY = os.environ['API_KEY']
 
+
 class TextlocalTest(unittest.TestCase):
 
     def setUp(self):
@@ -78,6 +79,10 @@ class TextlocalTest(unittest.TestCase):
         balance = self.textlocal.get_balance()
         self.assertIsInstance(balance[0], int)
         self.assertIsInstance(balance[1], int)
+
+    def test_get_templates_returns_list(self):
+        templates = self.textlocal.get_templates()
+        self.assertIsInstance(templates, list)
 
 if __name__ == '__main__':
     unittest.main()
