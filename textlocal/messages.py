@@ -59,10 +59,10 @@ class SMS(Message):
     """
 
     def __init__(self, message, numbers=None, group_id=None,
-                 schedule_times=None, simple_reply=False):
+                 schedule_time=None, simple_reply=False):
         """Returns a new SMS object."""
         # pylint: disable-msg=R0913
-        super().__init__(message, numbers, group_id, schedule_times)
+        super().__init__(message, numbers, group_id, schedule_time)
         self.simple_reply = simple_reply
 
 
