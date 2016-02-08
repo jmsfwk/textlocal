@@ -7,7 +7,7 @@ import requests
 class Textlocal(object):
     DOMAIN = 'https://api.txtlocal.com'
 
-    def __init__(self, api_key=None, username=None, password=None):
+    def __init__(self, api_key=None, username=None, password=None, **kwargs):
         if api_key == username == password == None:
             raise Exception(
                 "Either api_key or username and password must be used.")
@@ -16,6 +16,9 @@ class Textlocal(object):
         self.api_key = api_key
         self.username = username
         self.password = password
+        self.sender = kwargs.get('sender', None)
+        self.simple_reply = kwargs.get('simple_reply', None)
+        self.test = kwargs.get('test', False)
 
     def get_balance(self):
         """

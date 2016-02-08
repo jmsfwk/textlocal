@@ -26,6 +26,27 @@ class TextlocalTest(unittest.TestCase):
         textlocal = Textlocal(username='username', password='password')
         self.assertEqual(type(textlocal), Textlocal)
 
+    def test_init_kwargs_sender(self):
+        sender = 'sender'
+        textlocal = Textlocal(api_key=API_KEY)
+        self.assertEqual(textlocal.sender, None)
+        textlocal = Textlocal(api_key=API_KEY, sender=sender)
+        self.assertEqual(textlocal.sender, sender)
+
+    def test_init_kwargs_simple_reply(self):
+        simple_reply = True
+        textlocal = Textlocal(api_key=API_KEY)
+        self.assertEqual(textlocal.simple_reply, None)
+        textlocal = Textlocal(api_key=API_KEY, simple_reply=simple_reply)
+        self.assertEqual(textlocal.simple_reply, simple_reply)
+
+    def test_init_kwargs_test(self):
+        test = True
+        textlocal = Textlocal(api_key=API_KEY)
+        self.assertEqual(textlocal.test, False)
+        textlocal = Textlocal(api_key=API_KEY, test=test)
+        self.assertEqual(textlocal.test, test)
+
     def test_get_credentials_returns_dict(self):
         USERNAME = 'username'
         PASSWORD = 'password'
