@@ -53,6 +53,11 @@ class Message(object):
         dic = self.__dict__.items()
         return {k: v for k, v in dic if v}
 
+    def prepare(self):
+        dic = self.as_dict()
+        if 'schedule_time' in dic:
+            dic['schedule_time'] = dic['schedule_time'].timestamp()
+        return dic
 
 class SMS(Message):
     """
