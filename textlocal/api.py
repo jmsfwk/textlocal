@@ -52,6 +52,17 @@ class Textlocal(object):
         sms = SMS(message, numbers)
         return self._send(sms)
 
+    def _send(self, message):
+        data = message.as_dict()
+        data['test'] = True
+        if self.sender and not data.get('sender'):
+            data['sender'] = self.sender
+        if self.simple_reply and not data.get('simple_reply'):
+            data['simple_reply'] = self.simple_reply
+        if self.test and not data.get('test'):
+            data['test'] = self.test
+        return self._post('send', data)
+
     def _get(self, pathname, data=None):
         return self._call('get', pathname, data)
 
