@@ -77,7 +77,6 @@ class Textlocal(object):
         if not data:
             data = dict()
         data.update(self._get_credentials())
-        data['test'] = 'true'
         r = getattr(requests, method)(url, data)
         return r.json()
 
