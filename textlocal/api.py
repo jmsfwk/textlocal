@@ -3,6 +3,7 @@ import urllib.parse
 
 import requests
 
+from textlocal.messages import SMS
 
 class Textlocal(object):
     DOMAIN = 'https://api.txtlocal.com'
@@ -46,6 +47,10 @@ class Textlocal(object):
         PATHNAME = 'check_keyword'
         response = self._get(PATHNAME, {'keyword' : str(keyword)})
         return response.get('templates')
+
+    def txt(self, numbers, message):
+        sms = SMS(message, numbers)
+        return self._send(sms)
 
     def _get(self, pathname, data=None):
         return self._call('get', pathname, data)
