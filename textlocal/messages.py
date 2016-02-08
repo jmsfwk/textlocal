@@ -49,6 +49,10 @@ class Message(object):
     def __len__(self):
         return self.message_size()
 
+    def as_dict(self):
+        dic = self.__dict__.items()
+        return {k: v for k, v in dic if v}
+
 
 class SMS(Message):
     """
