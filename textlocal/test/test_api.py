@@ -105,5 +105,23 @@ class TextlocalTest(unittest.TestCase):
         templates = self.textlocal.get_templates()
         self.assertIsInstance(templates, list)
 
+    def test_get_message_defaults_empty(self):
+        message_defaults = self.textlocal._get_message_defaults()
+        self.assertIsInstance(message_defaults, dict)
+        self.assertEqual(len(message_defaults), 0)
+
+    def test_get_message_defaults(self):
+        test = True
+        simple_reply = True
+        sender = 'Sender'
+        textlocal = Textlocal(api_key='None', test=test, sender=sender,
+                              simple_reply=simple_reply)
+        message_defaults = textlocal._get_message_defaults()
+        self.assertIsInstance(message_defaults, dict)
+        self.assertEqual(len(message_defaults), 3)
+        self.assertEqual(message_defaults.get('test'), test)
+        self.assertEqual(message_defaults.get('sender'), sender)
+        self.assertEqual(message_defaults.get('simple_reply'), simple_reply)
+
 if __name__ == '__main__':
     unittest.main()

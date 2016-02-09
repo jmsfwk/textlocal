@@ -84,14 +84,8 @@ class Textlocal(object):
         return self._send(sms)
 
     def _send(self, message):
-        data = message.as_dict()
-        data['test'] = True
-        if self.sender and not data.get('sender'):
-            data['sender'] = self.sender
-        if self.simple_reply and not data.get('simple_reply'):
-            data['simple_reply'] = self.simple_reply
-        if self.test and not data.get('test'):
-            data['test'] = self.test
+        data = self._get_message_defaults()
+        data.update(message.as_dict())
         return self._post('send', data)
 
     def _get(self, pathname, data=None):
@@ -121,3 +115,19 @@ class Textlocal(object):
             return {'apiKey': self.api_key}
         else:
             return {'username': self.username, 'hash': self.password}
+
+    def _get_message_defaults(self):
+        """
+        Provides the default message fields.
+
+        Returns:
+            dict: A dictionay of messages settings.
+        """
+        defaults = {}
+        if self.sender:
+            defaults['sender'] = self.sender
+        if self.simple_reply:
+            defaults['simple_reply'] = self.simple_reply
+        if self.test:
+            defaults['test'] = self.test
+        return defaults
