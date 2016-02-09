@@ -88,6 +88,18 @@ class TextlocalTest(unittest.TestCase):
         self.assertEqual(len(response), 2)
         self.assertEqual(response['status'], 'failure')
 
+    def test_get(self):
+        response = self.textlocal._get('')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(len(response), 2)
+        self.assertEqual(response['status'], 'failure')
+
+    def test_post(self):
+        response = self.textlocal._post('')
+        self.assertIsInstance(response, dict)
+        self.assertEqual(len(response), 2)
+        self.assertEqual(response['status'], 'failure')
+
     def test_get_balance_returns_tuple(self):
         balance = self.textlocal.get_balance()
         self.assertIsInstance(balance, tuple)

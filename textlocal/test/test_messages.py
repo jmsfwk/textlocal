@@ -55,6 +55,22 @@ class MessageTest(unittest.TestCase):
         self.assertEqual(message.message_size(), 4)
         self.assertEqual(len(message), 4)
 
+    def test_as_dict(self):
+        message_text = 'message'
+        numbers = ['44012345678910']
+        group_id = None
+        message = Message(message_text, numbers, group_id=group_id)
+        dic = message.as_dict()
+        self.assertIn('message', dic)
+        self.assertIn('numbers', dic)
+        self.assertNotIn('group_id', dic)
+
+    def test_prepare(self):
+        schedule_time = datetime.today()
+        message = Message('message', [1,], schedule_time=schedule_time)
+        dic = message.prepare()
+        self.assertIsInstance(dic, dict)
+        self.assertEqual(dic.get('schedule_time'), schedule_time.timestamp())
 
 class SMSTest(unittest.TestCase):
 

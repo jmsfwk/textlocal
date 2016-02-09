@@ -3,16 +3,6 @@ import unittest
 import textlocal.contacts
 
 
-class TemplateTest(unittest.TestCase):
-
-    def test_template(self):
-        title = 'title'
-        body = 'body'
-        template = textlocal.contacts.Template(title, body)
-        self.assertEqual(template.title, title)
-        self.assertEqual(template.body, body)
-
-
 class GroupTest(unittest.TestCase):
 
     def test_group_with_only_name(self):
@@ -34,6 +24,31 @@ class GroupTest(unittest.TestCase):
         group = textlocal.contacts.Group(name, size=size)
         self.assertEqual(group.size, size)
 
+class ContactTest(unittest.TestCase):
+
+    def test_init_with_number_and_group(self):
+        number = '4412345678910'
+        group_id = 1
+        contact = textlocal.contacts.Contact(number, group_id)
+        self.assertEqual(contact.number, number)
+        self.assertEqual(contact.group_id, group_id)
+
+    def test_init_with_empty_kwargs(self):
+        number = '4412345678910'
+        group_id = 1
+        fields = ('first_name', 'last_name', 'custom1', 'custom2', 'custom3')
+        contact = textlocal.contacts.Contact(number, group_id)
+        for field in fields:
+            self.assertEqual(getattr(contact, field), '')
+
+    def test_init_with_kwargs(self):
+        number = '4412345678910'
+        group_id = 1
+        fields = ('first_name', 'last_name', 'custom1', 'custom2', 'custom3')
+        kwargs = {v:v for v in fields}
+        contact = textlocal.contacts.Contact(number, group_id, **kwargs)
+        for field in fields:
+            self.assertEqual(getattr(contact, field), kwargs[field])
 
 if __name__ == '__main__':
     unittest.main()
