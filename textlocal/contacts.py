@@ -1,9 +1,17 @@
-class Template(object):
-    def __init__(self, title, body):
-        self.title = title
-        self.body = body
+"""
+textlocal.contacts
+~~~~~~~~~~~~~~~~~~
 
+This module defines the classes used for contact management.
+"""
 class Contact(object):
+    """
+    Represents a contact with a single phone number.
+
+    Arguments:
+        number (PhoneNumber): The contacts phone number.
+        group_id (int)
+    """
     def __init__(self, number, group_id, **kwargs):
         self.number = number
         self.group_id = group_id

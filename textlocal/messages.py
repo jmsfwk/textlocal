@@ -1,5 +1,8 @@
 """
-Textlocal message classes.
+textlocal.messages
+~~~~~~~~~~~~~~~~~~
+
+This module defines the messages used by Textlocal.
 """
 import base64
 from datetime import datetime

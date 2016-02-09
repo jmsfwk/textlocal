@@ -1,3 +1,9 @@
+"""
+textlocal.api
+~~~~~~~~~~~~~
+
+This module contains the Textlocal api.
+"""
 import json
 import urllib.parse
 
@@ -6,6 +12,11 @@ import requests
 from textlocal.messages import SMS
 
 class Textlocal(object):
+    """
+    Textlocal([api_key[, username[, password[, **kwargs]]]])
+
+    The api_key or username and password are required.
+    """
     DOMAIN = 'https://api.txtlocal.com'
 
     def __init__(self, api_key=None, username=None, password=None, **kwargs):
@@ -26,6 +37,9 @@ class Textlocal(object):
         Gets the credit balance
 
         Returns as two-tuple in the form `(sms, mms)`.
+
+        Returns:
+            tuple: two-tuple in the form :code:`(sms, mms)`
         """
         PATHNAME = 'balance'
         response = self._get(PATHNAME)
@@ -35,6 +49,9 @@ class Textlocal(object):
     def get_templates(self):
         """
         Fetches all of the templates stored on Textlocal
+
+        Returns:
+            list: A list of :class:`Template`s
         """
         PATHNAME = 'get_templates'
         response = self._get(PATHNAME)
@@ -42,13 +59,27 @@ class Textlocal(object):
 
     def check_keyword(self, keyword):
         """
-        Fetches all of the templates stored on Textlocal
+        Checks the availablity of a keyword on 60777 and 66777.
+
+        Arguments:
+            keyword (str): The keyword to check
+
+        Returns:
+            list: A list of the numbers the keyword is available on.
+
+        Raises:
+            TextlocalException: If the keyword is too short
+            TextlocalException: If the keyword is too long
         """
         PATHNAME = 'check_keyword'
         response = self._get(PATHNAME, {'keyword' : str(keyword)})
         return response.get('templates')
 
     def txt(self, numbers, message):
+        """
+        Arguments:
+            numbers (list): A list of :class:`PhoneNumber`
+        """
         sms = SMS(message, numbers)
         return self._send(sms)
 
