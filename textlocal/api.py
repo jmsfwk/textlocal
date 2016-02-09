@@ -23,7 +23,9 @@ class Textlocal(object):
         if api_key == username == password == None:
             raise Exception(
                 "Either api_key or username and password must be used.")
-        elif (username is None and password is not None) or (password is None and username is not None):
+        elif ((username is None and password is not None)
+                or
+                (password is None and username is not None)):
             raise Exception("If using username and password both must be set.")
         self.api_key = api_key
         self.username = username
